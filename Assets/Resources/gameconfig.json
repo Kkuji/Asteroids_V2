@@ -1,0 +1,44 @@
+{
+  "playerConfig": {
+    "maxHealth": 3,
+    "speed": 5.0,
+    "maxSpeed": 10.0,
+    "rotationSpeed": 100.0,
+    "inertiaTime": 1.5,
+    "inertiaDecreaseSpeed": 0.1,
+    "inertiaDragFactor": 0.95,
+    "hitDisableDuration": 3,
+    "hitSpeedDecrease": 0.5,
+    "minHitPushForce": 1.5,
+    "invulnerableDuration": 3,
+    "moveAfterHitDuration": 1
+  },
+  "enemyConfig": {
+    "asteroidMinSpeed": 1,
+    "asteroidMaxSpeed": 2,
+    "enemyShipMinSpeed": 2,
+    "enemyShipMaxSpeed": 3,
+    "asteroidDeflectionAngle": 0.2,
+    "bounceCooldown": 4,
+    "defaultEnemiesPositionZ": 0,
+    "scoreAsteroid": 100,
+    "scoreAsteroidSmall": 50,
+    "scoreEnemyShip": 150
+  },
+  "worldConfig": {
+    "startAsteroidsAmount": 2,
+    "maxAsteroidsAmount": 3,
+    "startEnemyShipsAmount": 1,
+    "maxEnemyShipsAmount": 2,
+    "starBulletsAmount": 10,
+    "maxBulletsAmount": 30,
+    "bulletSpeed": 10,
+    "asteroidsSpawnMinTimeStep": 1,
+    "asteroidsSpawnMaxTimeStep": 5,
+    "enemyShipSpawnMinTimeStep": 1,
+    "enemyShipSpawnMaxTimeStep": 5,
+    "laserAppearDuration": 1,
+    "maxShots": 3,
+    "shotRechargeTime": 8
+  }
+}
