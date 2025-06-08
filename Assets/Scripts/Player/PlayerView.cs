@@ -1,21 +1,29 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerView : MonoBehaviour
 {
     [SerializeField] private ParticleSystem particleSystem;
-    [SerializeField] private PlayerCollisions playerCollisions;
+
+    private SignalBus _signalBus;
+
+    [Inject]
+    public void Construct(SignalBus signalBus)
+    {
+        _signalBus = signalBus;
+    }
 
     private void OnEnable()
     {
-        playerCollisions.PlayerHitEnemyAction += MakeShipInvulnerable;
+        _signalBus.Subscribe<PlayerHitSignal>(OnPlayerHit);
     }
 
     private void OnDisable()
     {
-        playerCollisions.PlayerHitEnemyAction -= MakeShipInvulnerable;
+        _signalBus.Unsubscribe<PlayerHitSignal>(OnPlayerHit);
     }
 
-    private void MakeShipInvulnerable()
+    private void OnPlayerHit()
     {
         particleSystem.Play();
     }

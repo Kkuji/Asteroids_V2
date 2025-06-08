@@ -7,20 +7,22 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:66566320048:android:fc2c8596b337c0c11df075",
+        "mobilesdk_app_id": "1:66566320048:ios:95b300fa28a1d0821df075",
         "android_client_info": {
           "package_name": "com.dan.asteroids"
         }
       },
-      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAbGzcVWPrszwRoip1mzwlKDAttXOJREqs"
+          "current_key": "AIzaSyDKMwYIEJ_7DSstG07yDcWt0KvU_QZlowk"
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 0
+        },
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "status": 1
         }
       }
     }

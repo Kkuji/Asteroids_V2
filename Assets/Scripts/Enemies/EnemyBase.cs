@@ -41,15 +41,21 @@ public abstract class EnemyBase : MonoBehaviour, IPoolable
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!canBounce)
-            return;
+        // if (!canBounce)
+        //     return;
+        //
+        // if (!collision.collider.TryGetComponent(out PlayerCollisions playerCollisions))
+        //     return;
+        //
+        // if (playerCollisions.LastCollidedObject != gameObject)
+        //     return;
+        //
+        // motionDirection = Vector3.Reflect(motionDirection, collision.contacts[0].normal);
+        // BounceCooldown().Forget();
+    }
 
-        if (!collision.collider.TryGetComponent(out PlayerCollisions playerCollisions))
-            return;
-
-        if (playerCollisions.LastCollidedObject != gameObject)
-            return;
-
+    public void CollidedWithPlayer(Collision collision)
+    {
         motionDirection = Vector3.Reflect(motionDirection, collision.contacts[0].normal);
         BounceCooldown().Forget();
     }

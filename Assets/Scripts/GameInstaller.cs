@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Managment;
 using UnityEngine;
 using Zenject;
@@ -11,6 +9,8 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        SignalBusInstaller.Install(Container);
+        Container.DeclareSignal<PlayerHitSignal>();
         Container.Bind<ConfigService>().AsSingle();
         Container.Bind<MyObjectPool<IPoolable>>().AsSingle();
         Container.Bind<Transform>().FromInstance(playerShip).AsSingle();
@@ -32,10 +32,6 @@ public class GameInstaller : MonoInstaller
             .AsSingle();
 
         Container.Bind<LaserController>()
-            .FromComponentInHierarchy()
-            .AsSingle();
-
-        Container.Bind<UIInfo>()
             .FromComponentInHierarchy()
             .AsSingle();
     }
