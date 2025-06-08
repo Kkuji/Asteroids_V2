@@ -1,6 +1,3 @@
-using UnityEngine;
-using Zenject;
-
 public class BulletSpawner : SpawnerBase
 {
     protected override void RegisterPools()

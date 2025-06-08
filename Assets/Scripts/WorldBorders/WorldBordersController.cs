@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class WorldBordersController : MonoBehaviour
+public class WorldBordersController : MonoBehaviour, ISpawnPositionProvider
 {
     [SerializeField] private WorldBorder leftBorder, rightBorder, topBorder, bottomBorder;
 
     [SerializeField] private float borderThickness = 1f;
-    [SerializeField] private float borderOffset = 2f;
+    [SerializeField] private float borderOffset = 1.5f;
     [SerializeField] private float addingDistanceAfterTeleport = 1f;
+    [SerializeField] private float spawnDistanceFromBorder = 2f;
 
     private Camera _mainCamera;
 
@@ -24,6 +25,50 @@ public class WorldBordersController : MonoBehaviour
     private void OnDisable()
     {
         SetBorderEvents(false);
+    }
+
+    public Vector3 GetRandomSpawnPositionAtBorder()
+    {
+        int randomBorder = Random.Range(0, 4);
+        WorldBorder selectedBorder = null;
+        Vector3 spawnPosition = Vector3.zero;
+
+        float verticalSize = _mainCamera.orthographicSize;
+        float horizontalSize = verticalSize * _mainCamera.aspect;
+
+        switch (randomBorder)
+        {
+            case 0:
+                spawnPosition = new Vector3(
+                    -horizontalSize - borderOffset - spawnDistanceFromBorder,
+                    Random.Range(-verticalSize, verticalSize),
+                    0
+                );
+                break;
+            case 1:
+                spawnPosition = new Vector3(
+                    horizontalSize + borderOffset + spawnDistanceFromBorder,
+                    Random.Range(-verticalSize, verticalSize),
+                    0
+                );
+                break;
+            case 2:
+                spawnPosition = new Vector3(
+                    Random.Range(-horizontalSize, horizontalSize),
+                    verticalSize + borderOffset + spawnDistanceFromBorder,
+                    0
+                );
+                break;
+            case 3:
+                spawnPosition = new Vector3(
+                    Random.Range(-horizontalSize, horizontalSize),
+                    -verticalSize - borderOffset - spawnDistanceFromBorder,
+                    0
+                );
+                break;
+        }
+
+        return spawnPosition;
     }
 
     private void SetBorderEvents(bool subscribe)
@@ -47,8 +92,10 @@ public class WorldBordersController : MonoBehaviour
         Vector3 newPosition = objectTransform.position;
 
         float sign = isHorizontalTeleport
-            ? (objectTransform.position.x < 0 ? -1 : 1)
-            : (objectTransform.position.y < 0 ? -1 : 1);
+            ? objectTransform.position.x < 0 ? -1 : 1
+            : objectTransform.position.y < 0
+                ? -1
+                : 1;
 
         if (isHorizontalTeleport)
             newPosition.x = transformTeleportTo.position.x + sign * addingDistanceAfterTeleport;

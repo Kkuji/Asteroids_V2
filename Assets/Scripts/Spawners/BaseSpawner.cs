@@ -2,31 +2,34 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Random = UnityEngine.Random;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public abstract class SpawnerBase : MonoBehaviour
 {
-    [SerializeField] private PolygonCollider2D spawnBordersPolygonCollider2D;
-
     protected const float SPAWN_TIMEOUT = 1f;
-    protected MyObjectPool<IPoolable> _objectPool;
-    protected WorldConfig _worldConfig;
     protected CancellationTokenSource _cancellationTokenSource;
     protected Factory _factory;
-
-    [Inject]
-    public void Initialize(ConfigService configService, MyObjectPool<IPoolable> objectPool, Factory factory)
-    {
-        _worldConfig = configService.gameConfig.worldConfig;
-        _objectPool = objectPool;
-        _factory = factory;
-    }
+    protected MyObjectPool<IPoolable> _objectPool;
+    protected ISpawnPositionProvider _spawnPositionProvider;
+    protected WorldConfig _worldConfig;
 
     protected virtual void Start()
     {
         _cancellationTokenSource = new CancellationTokenSource();
         RegisterPools();
+    }
+
+    [Inject]
+    public void Initialize(ConfigService configService,
+    MyObjectPool<IPoolable> objectPool,
+    Factory factory,
+    ISpawnPositionProvider spawnPositionProvider)
+    {
+        _worldConfig = configService.gameConfig.worldConfig;
+        _objectPool = objectPool;
+        _factory = factory;
+        _spawnPositionProvider = spawnPositionProvider;
     }
 
     protected abstract void RegisterPools();
@@ -65,16 +68,9 @@ public abstract class SpawnerBase : MonoBehaviour
 
     protected void SpawnIPoolableObject(Enums.SpawnType spawnType)
     {
-        var poolable = _objectPool.Get(spawnType);
-        poolable.SetStartPosition(GetRandomPointInSpawnBounds(spawnBordersPolygonCollider2D));
-    }
+        IPoolable poolable = _objectPool.Get(spawnType);
 
-    protected Vector3 GetRandomPointInSpawnBounds(PolygonCollider2D collider)
-    {
-        var randomPoint = new Vector2(
-            Random.Range(collider.bounds.min.x, collider.bounds.max.x),
-            Random.Range(collider.bounds.min.y, collider.bounds.max.y)
-        );
-        return collider.ClosestPoint(new Vector3(randomPoint.x, randomPoint.y, 0));
+        Vector3 spawnPosition = _spawnPositionProvider.GetRandomSpawnPositionAtBorder();
+        poolable.SetStartPosition(spawnPosition);
     }
 }
