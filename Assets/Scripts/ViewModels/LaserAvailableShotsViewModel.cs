@@ -1,32 +1,31 @@
 using System;
 using Gameplay;
+using MVVM;
 using Sirenix.OdinInspector;
 using UniRx;
-using UnityEngine;
 using Zenject;
-using MVVM;
 
 public class LaserAvailableShotsViewModel : IInitializable, IDisposable
 {
-    [Data("Int")] [ReadOnly] public ReactiveProperty<string> LaserAvailableShots = new();
+    private const string PREFIX = "Laser available shots: ";
 
     private readonly LaserAvailableShotsStorage LaserAvailableShotsStorage;
-    private const string PREFIX = "LaserAvailableShots: ";
+    [Data("Int")] [ReadOnly] public ReactiveProperty<string> LaserAvailableShots = new();
 
     public LaserAvailableShotsViewModel(LaserAvailableShotsStorage laserAvailableShotsStorage)
     {
-        this.LaserAvailableShotsStorage = laserAvailableShotsStorage;
-    }
-
-    public void Initialize()
-    {
-        this.OnLaserAvailableShotsChanged(LaserAvailableShotsStorage.LaserAvailableShots);
-        this.LaserAvailableShotsStorage.OnLaserAvailableShotsChanged += OnLaserAvailableShotsChanged;
+        LaserAvailableShotsStorage = laserAvailableShotsStorage;
     }
 
     public void Dispose()
     {
-        this.LaserAvailableShotsStorage.OnLaserAvailableShotsChanged -= OnLaserAvailableShotsChanged;
+        LaserAvailableShotsStorage.OnLaserAvailableShotsChanged -= OnLaserAvailableShotsChanged;
+    }
+
+    public void Initialize()
+    {
+        OnLaserAvailableShotsChanged(LaserAvailableShotsStorage.LaserAvailableShots);
+        LaserAvailableShotsStorage.OnLaserAvailableShotsChanged += OnLaserAvailableShotsChanged;
     }
 
     private void OnLaserAvailableShotsChanged(int LaserAvailableShots)

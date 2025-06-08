@@ -30,45 +30,33 @@ public class WorldBordersController : MonoBehaviour, ISpawnPositionProvider
     public Vector3 GetRandomSpawnPositionAtBorder()
     {
         int randomBorder = Random.Range(0, 4);
-        WorldBorder selectedBorder = null;
-        Vector3 spawnPosition = Vector3.zero;
-
         float verticalSize = _mainCamera.orthographicSize;
         float horizontalSize = verticalSize * _mainCamera.aspect;
 
-        switch (randomBorder)
+        return randomBorder switch
         {
-            case 0:
-                spawnPosition = new Vector3(
-                    -horizontalSize - borderOffset - spawnDistanceFromBorder,
-                    Random.Range(-verticalSize, verticalSize),
-                    0
-                );
-                break;
-            case 1:
-                spawnPosition = new Vector3(
-                    horizontalSize + borderOffset + spawnDistanceFromBorder,
-                    Random.Range(-verticalSize, verticalSize),
-                    0
-                );
-                break;
-            case 2:
-                spawnPosition = new Vector3(
-                    Random.Range(-horizontalSize, horizontalSize),
-                    verticalSize + borderOffset + spawnDistanceFromBorder,
-                    0
-                );
-                break;
-            case 3:
-                spawnPosition = new Vector3(
-                    Random.Range(-horizontalSize, horizontalSize),
-                    -verticalSize - borderOffset - spawnDistanceFromBorder,
-                    0
-                );
-                break;
-        }
-
-        return spawnPosition;
+            0 => new Vector3(
+                -horizontalSize - borderOffset - spawnDistanceFromBorder,
+                Random.Range(-verticalSize, verticalSize),
+                0
+            ),
+            1 => new Vector3(
+                horizontalSize + borderOffset + spawnDistanceFromBorder,
+                Random.Range(-verticalSize, verticalSize),
+                0
+            ),
+            2 => new Vector3(
+                Random.Range(-horizontalSize, horizontalSize),
+                verticalSize + borderOffset + spawnDistanceFromBorder,
+                0
+            ),
+            3 => new Vector3(
+                Random.Range(-horizontalSize, horizontalSize),
+                -verticalSize - borderOffset - spawnDistanceFromBorder,
+                0
+            ),
+            _ => Vector3.zero
+        };
     }
 
     private void SetBorderEvents(bool subscribe)
@@ -107,26 +95,25 @@ public class WorldBordersController : MonoBehaviour, ISpawnPositionProvider
 
     private void UpdateBorderPositions()
     {
-        if (_mainCamera == null || !_mainCamera.orthographic)
-            return;
-
         float verticalSize = _mainCamera.orthographicSize;
         float horizontalSize = verticalSize * _mainCamera.aspect;
 
-        leftBorder.transform.position = new Vector3(-horizontalSize - borderOffset, 0, 0);
-        leftBorder.transform.localScale =
-            new Vector3(borderThickness, verticalSize * 2 + borderThickness, borderThickness);
+        SetBorderPosition(leftBorder, new Vector3(-horizontalSize - borderOffset, 0, 0),
+            new Vector3(borderThickness, verticalSize * 2 + borderThickness, borderThickness));
 
-        rightBorder.transform.position = new Vector3(horizontalSize + borderOffset, 0, 0);
-        rightBorder.transform.localScale =
-            new Vector3(borderThickness, verticalSize * 2 + borderThickness, borderThickness);
+        SetBorderPosition(rightBorder, new Vector3(horizontalSize + borderOffset, 0, 0),
+            new Vector3(borderThickness, verticalSize * 2 + borderThickness, borderThickness));
 
-        topBorder.transform.position = new Vector3(0, verticalSize + borderOffset, 0);
-        topBorder.transform.localScale =
-            new Vector3(horizontalSize * 2 + borderThickness, borderThickness, borderThickness);
+        SetBorderPosition(topBorder, new Vector3(0, verticalSize + borderOffset, 0),
+            new Vector3(horizontalSize * 2 + borderThickness, borderThickness, borderThickness));
 
-        bottomBorder.transform.position = new Vector3(0, -verticalSize - borderOffset, 0);
-        bottomBorder.transform.localScale =
-            new Vector3(horizontalSize * 2 + borderThickness, borderThickness, borderThickness);
+        SetBorderPosition(bottomBorder, new Vector3(0, -verticalSize - borderOffset, 0),
+            new Vector3(horizontalSize * 2 + borderThickness, borderThickness, borderThickness));
+    }
+
+    private void SetBorderPosition(WorldBorder border, Vector3 position, Vector3 scale)
+    {
+        border.transform.position = position;
+        border.transform.localScale = scale;
     }
 }
