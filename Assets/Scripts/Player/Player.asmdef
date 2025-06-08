@@ -1,19 +1,22 @@
 {
-    "name": "Player",
-    "rootNamespace": "",
-    "references": [
-        "GUID:e9b6f0113934e4523ae271f60e23a6a8",
-        "GUID:391098222e66242f49b09d4b25ae0a62",
-        "GUID:f51ebe6a0ceec4240a699833d6309b23",
-        "GUID:df0317b35a9f84ed9b86376db2c77224"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Player",
+  "rootNamespace": "",
+  "references": [
+    "GUID:e9b6f0113934e4523ae271f60e23a6a8",
+    "GUID:f51ebe6a0ceec4240a699833d6309b23",
+    "GUID:df0317b35a9f84ed9b86376db2c77224",
+    "GUID:62361d50a106e40a6aaa9405f561ea13",
+    "GUID:1d152c877f90f4d3d86adfcaca5f48d6",
+    "GUID:569fc1956ef06427e8cbf8f6216c7cf7",
+    "GUID:0d8beb7f090555447a6cf5ce9e54dbb4"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

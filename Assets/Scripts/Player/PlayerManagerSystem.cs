@@ -1,12 +1,18 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Gameplay;
 using UnityEngine;
 using Zenject;
 
 public class PlayerManagerSystem : MonoBehaviour
 {
     [SerializeField] private LaserController laserController;
+
+    private PositionStorage _positionStorage;
+    private AngleStorage _angleStorage;
+    private SpeedStorage _speedStorage;
+    private HealthStorage _healthStorage;
 
     private bool _isMovingByKey;
     private PlayerConfig _playerConfig;
@@ -18,19 +24,17 @@ public class PlayerManagerSystem : MonoBehaviour
     private int _currentHealth;
     private MyObjectPool<IPoolable> _objectPool;
 
-    public event Action<int> HealthPointsChangedAction;
-
     public Vector2 Velocity => _velocity;
 
     private void Awake()
     {
-        HealthPointsChangedAction?.Invoke(_currentHealth);
+        _healthStorage.SetHealth(_currentHealth);
     }
 
     public void DecreaseHealth()
     {
         _currentHealth--;
-        HealthPointsChangedAction?.Invoke(_currentHealth);
+        _healthStorage.SetHealth(_currentHealth);
 
         if (_currentHealth < 1)
             gameObject.SetActive(false);
@@ -40,12 +44,20 @@ public class PlayerManagerSystem : MonoBehaviour
     public void Initialize(
     ConfigService configService,
     IInputService inputService,
-    MyObjectPool<IPoolable> objectPool)
+    MyObjectPool<IPoolable> objectPool,
+    PositionStorage positionStorage,
+    AngleStorage angleStorage,
+    SpeedStorage speedStorage,
+    HealthStorage healthStorage)
     {
         _playerConfig = configService.gameConfig.playerConfig;
         _currentHealth = _playerConfig.maxHealth;
         _inputService = inputService;
         _objectPool = objectPool;
+        _positionStorage = positionStorage;
+        _angleStorage = angleStorage;
+        _speedStorage = speedStorage;
+        _healthStorage = healthStorage;
     }
 
     public void ShipHit(Vector2 normal)
@@ -67,6 +79,10 @@ public class PlayerManagerSystem : MonoBehaviour
 
     private void Update()
     {
+        _positionStorage.SetPosition(transform.position);
+        _angleStorage.SetAngle(transform.rotation.eulerAngles);
+        _speedStorage.SetSpeed(_velocity.magnitude);
+
         if (_isHit)
         {
             if (_velocity != Vector2.zero)

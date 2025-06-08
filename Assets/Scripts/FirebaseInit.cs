@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Analytics;
 using Firebase.Extensions;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class FirebaseInit : MonoBehaviour
 {

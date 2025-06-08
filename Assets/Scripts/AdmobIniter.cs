@@ -1,12 +1,8 @@
-using System;
 using System.Collections.Generic;
 using GoogleMobileAds.Api;
 using UnityEngine;
-using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 using Exception = System.Exception;
-using PlayerPrefs = UnityEngine.PlayerPrefs;
-using Time = UnityEngine.Time;
 
 public class AdmobIniter : MonoBehaviour
 {
@@ -48,7 +44,6 @@ public class AdmobIniter : MonoBehaviour
         {
             _bannerView.LoadAd(adRequest);
             _isBannerVisible = true;
-            Debug.Log("banner created with id = " + _bannerUnitId);
         }
         catch (Exception e)
         {

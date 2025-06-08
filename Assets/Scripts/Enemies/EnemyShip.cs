@@ -1,7 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 using Random = UnityEngine.Random;
 
 public class EnemyShip : EnemyBase

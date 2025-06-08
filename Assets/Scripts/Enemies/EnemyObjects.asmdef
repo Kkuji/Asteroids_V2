@@ -1,3 +1,20 @@
 {
-	"name": "EnemyObjects"
+  "name": "EnemyObjects",
+  "rootNamespace": "",
+  "references": [
+    "GUID:f51ebe6a0ceec4240a699833d6309b23",
+    "GUID:e9b6f0113934e4523ae271f60e23a6a8",
+    "GUID:62361d50a106e40a6aaa9405f561ea13",
+    "GUID:0d71e26e9331944fabc256f708bc1026",
+    "GUID:569fc1956ef06427e8cbf8f6216c7cf7"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

@@ -5,22 +5,22 @@ using Zenject;
 
 public class PlayerCollisions : MonoBehaviour
 {
-    public event Action PlayerHitEnemyAction;
-
     [SerializeField] private PlayerManagerSystem playerManagerSystem;
     private GameObject _lastCollidedObject;
 
     private bool _isCollided;
     private int _health;
     private PlayerConfig _playerConfig;
+    private SignalBus _signalBus;
 
     public bool IsCollided => _isCollided;
     public GameObject LastCollidedObject => _lastCollidedObject;
 
     [Inject]
-    public void Initialize(ConfigService configService)
+    public void Initialize(ConfigService configService, SignalBus signalBus)
     {
         _playerConfig = configService.gameConfig.playerConfig;
+        _signalBus = signalBus;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -28,15 +28,19 @@ public class PlayerCollisions : MonoBehaviour
         if (IsCollided)
             return;
 
-        if (!collision.collider.TryGetComponent<EnemyBase>(out _))
+        if (!collision.collider.TryGetComponent<EnemyBase>(out EnemyBase enemy))
             return;
 
+        enemy.CollidedWithPlayer(collision);
         playerManagerSystem.DecreaseHealth();
         _lastCollidedObject = collision.collider.gameObject;
         Vector3 normal3D = collision.contacts[0].normal;
         Vector2 normal = new(normal3D.x, normal3D.y);
         playerManagerSystem.ShipHit(normal);
-        PlayerHitEnemyAction?.Invoke();
+
+        // Отправляем сигнал вместо вызова события
+        _signalBus.Fire<PlayerHitSignal>();
+
         HitCooldownAsync().Forget();
     }
 

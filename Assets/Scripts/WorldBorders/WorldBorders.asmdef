@@ -1,0 +1,19 @@
+{
+  "name": "WorldBorders",
+  "rootNamespace": "",
+  "references": [
+    "GUID:4e0bd5cc1ed3b49c2bc69b1731a7df99",
+    "GUID:df0317b35a9f84ed9b86376db2c77224",
+    "GUID:62361d50a106e40a6aaa9405f561ea13",
+    "GUID:e9b6f0113934e4523ae271f60e23a6a8"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class EnemyAsteroidSmall : EnemyBase
 {
     private float _deflection;
-    private float SPEED_MULTIPLIER = 1.5f;
+    private const float SPEED_MULTIPLIER = 1.5f;
 
     protected override void ReleaseThisEnemy()
     {

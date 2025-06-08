@@ -77,3 +77,17 @@ Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_2_0.bundle.meta
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_2_0.so
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-12_2_0.so.meta
 Library/ArtifactDB
+
+# macOS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# JetBrains IDE files
+.idea/
+*.iml
+*.iws
